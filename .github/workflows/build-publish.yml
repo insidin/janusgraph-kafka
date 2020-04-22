@@ -17,8 +17,28 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B -DskipTests package
-    - name: Upload artifcats
-      uses: actions/upload-artifact@v1
+#    - name: Upload artifcats
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: janusgraph-kafka-0.1.0
+#        path: target/janusgraph-kafka-0.1.0-distribution.zip
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: janusgraph-kafka-0.1.0
-        path: target/janusgraph-kafka-0.1.0-distribution.zip
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: target/janusgraph-kafka-0.1.0-distribution.zip
+        asset_name: janusgraph-kafka-0.1.0-distribution.zip
+        asset_content_type: application/zip
