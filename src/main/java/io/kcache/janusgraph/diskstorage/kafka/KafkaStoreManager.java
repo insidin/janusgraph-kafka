@@ -104,7 +104,7 @@ public class KafkaStoreManager extends AbstractStoreManager implements OrderedKe
 
             if (mutationValue.hasAdditions()) {
                 for (KeyValueEntry entry : mutationValue.getAdditions()) {
-                    store.insert(entry.getKey(),entry.getValue(),txh);
+                    store.insert(entry.getKey(), entry.getValue(), txh, -1 );
                     log.trace("Insertion on {}: {}", mutation.getKey(), entry);
                 }
             }
