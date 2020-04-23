@@ -28,7 +28,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v0.1.0
+        tag_name: v0.1.0-${{ github.run_id }}
         release_name: janusgraph-kafka-0.1.0-${{ github.run_id }}
         draft: false
         prerelease: false
